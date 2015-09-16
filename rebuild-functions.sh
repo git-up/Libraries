@@ -11,6 +11,14 @@ IOS_SDK_VERSION=`xcodebuild -version -sdk | grep -A 1 '^iPhone' | tail -n 1 |  a
 OSX_SDK_VERSION=`xcodebuild -version -sdk | grep -A 1 '^MacOSX' | tail -n 1 |  awk '{ print $2 }'`
 DEVELOPER_DIR=`xcode-select --print-path`
 
+function post_build_hook() {
+  echo "Post build hook"
+}
+
+function post_package_hook() {
+  echo "Post package hook"
+}
+
 function build_library_arch () {
   local DESTINATION="$1"
   local PLATFORM="$2"
@@ -77,7 +85,10 @@ function build_library_arch () {
   make -j4 > "$LOG"
   make install > "$LOG"
   make clean > "$LOG"
-
+  
+  # Hook
+  post_build_hook "$PLATFORM" "$ARCH" "$PREFIX" "$DESTINATION"
+  
   # Copy "bin/" for first architecture and on OS X only
   if [ "$PLATFORM" == "MacOSX" ] && [ -d "$PREFIX/bin" ] && [ ! -d "$DESTINATION/bin" ]
   then
@@ -103,6 +114,9 @@ function build_library_arch () {
     fi
   done
   popd
+  
+  # Hook
+  post_package_hook "$PLATFORM" "$ARCH" "$PREFIX" "$DESTINATION"
   
   # Clean up
   rm -rf "$PREFIX"
