@@ -1,14 +1,14 @@
 #!/bin/sh
 set -ex
 
-VERSION="1.6.0"
+VERSION="1.8.0"
 
 source "../rebuild-functions.sh"
 
 # Download source
 if [ ! -f "libssh2-$VERSION.tar.gz" ]
 then
-  curl -O "http://www.libssh2.org/download/libssh2-$VERSION.tar.gz"
+  curl -O "https://www.libssh2.org/download/libssh2-$VERSION.tar.gz"
 fi
 
 # Extract source
