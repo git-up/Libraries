@@ -19,7 +19,7 @@ Build Environment
 =================
 
 * OS X 10.10.5
-* Xcode 7.0
+* Xcode 8.0
 * OS X SDK 11.0 (minimum deployment version 10.8)
 * iOS SDK 9.0 (minimum deployment version 8.0)
 
